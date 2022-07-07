@@ -782,6 +782,73 @@ SELECT DISTINCT movie_lang, age_certificate FROM movies
 ORDER BY movie_lang;
 
 
+SELECT * FROM directors;
 
+-- CHALLENGE 1
+SELECT * FROM directors                                                -- 1970-06-26 to 1889-02-23
+WHERE nationality = 'American'
+ORDER BY date_of_birth;
+
+-- CHALLENGE 2
+SELECT DISTINCT nationality FROM directors
+ORDER BY nationality;                         						  -- 11 different nationality
+
+-- CHALLENGE 3
+SELECT first_name, last_name, date_of_birth FROM actors               -- 1995-08-27 to 1983-04-15
+WHERE gender = 'F'
+ORDER BY date_of_birth DESC
+LIMIT 10;
+
+
+-- Dealing with NULL values
+
+/* 
+SELECT * FROM tablename
+WHERE columnname IS NULL;
+
+SELECT * FROM tablename
+WHERE columnname IS NOT NULL;
+*/
+
+SELECT * FROM actors
+WHERE date_of_birth IS NULL;        -- Xian Gao
+
+
+SELECT * FROM actors
+WHERE date_of_birth IS NOT NULL;    -- All expect ian Gao
+
+
+/*
+Use of "IS NULL" and "IS NOT USE"
+
+1. When we are ordering our date 
+2. When we have a missing data
+*/
+
+-- When ordering our data
+SELECT * FROM movie_revenues
+WHERE domestic_takings IS NOT NULL
+ORDER BY domestic_takings DESC;
+
+-- To determine whether we have a missing data
+SELECT * FROM movie_revenues
+WHERE international_takings IS NULL;
+
+-- Setting a column alias: This only affect the output/result not the original dataset 
+/*
+SELECT columnname AS new_columnname FROM tablename;
+*/
+
+SELECT last_name AS surname FROM directors;
+
+-- "Alias" and "WHERE" clause :Using Alias with WHERE clasue return error, instead use the orifinal columnnane
+SELECT last_name AS surname FROM directors
+WHERE last_name = 'Anderson';
+
+
+-- "Alias" and "ORDER BY: Alias can be used with Order by
+SELECT last_name AS surname FROM directors
+WHERE last_name like 'A%'
+ORDER BY surname;
 
 
