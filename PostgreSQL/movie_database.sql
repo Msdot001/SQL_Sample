@@ -852,3 +852,57 @@ WHERE last_name like 'A%'
 ORDER BY surname;
 
 
+--Using Concatenate
+/*
+
+This is used to link two strings together into new string 
+
+synthas
+SELECT string1 || string2 AS new_string;
+
+or 
+To link two columns together into new column
+
+synthas
+SELECT CONCAT(column1, column2) AS new_column FROM tablename;
+
+SELECT CONCAT_WS(' ', column1, column2) AS new_column FROM tablename;
+
+*/
+
+-- Concate Strings
+
+SELECT 'MOSHOOD' || ' ' || 'Owolabi' AS full_name   -- joining three strings "Moshood", "space", "Owolabi"
+
+-- Concate column (e,g first_name and last_name)
+SELECT CONCAT(first_name, last_name) AS full_name FROM actors;   -- without separator
+
+SELECT CONCAT(first_name,' - ',last_name) AS full_name FROM actors;   -- with separator
+
+
+-- Concate with seperator
+SELECT CONCAT_WS(' ',first_name, last_name, date_of_birth) 
+AS full_name 
+FROM actors;
+
+-- CHAllANGE FOUR
+
+-- Challenge 1
+
+SELECT * FROM movie_revenues
+WHERE international_takings IS NOT NULL
+ORDER BY international_takings DESC
+LIMIT 3;   								---or FETCH FIRST 3 ROW ONLY
+
+
+-- Challenge 2
+
+SELECT CONCAT_WS(' ', first_name, last_name)
+AS full_name 
+FROM directors
+
+-- Challenge 3
+
+SELECT * FROM actors 
+WHERE first_name IS NULL
+OR date_of_birth IS NULL;
