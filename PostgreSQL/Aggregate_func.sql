@@ -91,3 +91,33 @@ GROUP BY movie_lang;
 -- GROUP BY  with multiple columns
 SELECT movie_lang, age_certificate, AVG(movie_length) FROM movies
 GROUP BY movie_lang, age_certificate;
+
+-- Multiple Function applied with GROUP BY
+
+SELECT movie_lang, MIN(movie_length),MAX(movie_length) FROM movies
+WHERE age_certificate = '15'
+GROUP BY movie_lang;
+
+
+-- HAVING CLAUSES : Use for filterig Aggregate function
+
+/*
+
+SELECT column1, AGGFUN(column2) FROM tablename
+GROUP BY clumn1
+HAVING AGGFUN(column3) = value ;
+
+*/
+
+-- HAVING clause must come after GROUP BY 
+SELECT movie_lang, COUNT(movie_lang) FROM movies
+GROUP BY movie_lang
+HAVING COUNT(movie_lang) > 1;
+
+
+
+-- HAVING clause must come after GROUP BY 
+SELECT movie_lang, COUNT(movie_lang) FROM movies
+WHERE movie_length > 120
+GROUP BY movie_lang
+HAVING COUNT(movie_lang) > 1;
