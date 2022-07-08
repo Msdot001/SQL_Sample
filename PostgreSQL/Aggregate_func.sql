@@ -140,3 +140,28 @@ GROUP BY movie_lang, age_certificate;
 SELECT movie_lang, SUM(movie_length) FROM movies
 GROUP BY movie_lang
 HAVING SUM(movie_length) > 500;
+
+
+-- Using Mathematical Operators
+
+/*
+	+  -  / * %
+*/
+
+SELECT 5 + 6 AS addition;
+SELECT 8 - 3 AS subtraction;
+SELECT 35 / 3 AS division;     					 -- This only return the integer and neglet the decimal 
+SELECT 4 * 6 AS multiplication;
+
+SELECT 15 % 4 AS modulus                         -- This give the decimal part of the output
+
+-- Using mathemtaical operator on column
+
+SELECT * FROM movie_revenues;
+
+-- if one of the column is NULL, the output will be NULL
+SELECT movie_id, (domestic_takings + international_takings) AS total_takings FROM movie_revenues
+ORDER BY total_takings DESC;
+
+SELECT movie_id, (domestic_takings - international_takings) AS total_takings FROM movie_revenues
+ORDER BY total_takings DESC;
