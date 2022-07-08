@@ -73,3 +73,21 @@ WHERE nationality = 'Japanese';							-- 3
 SELECT AVG(movie_length) FROM movies
 WHERE movie_lang = 'Chinese';						   -- 121.80				
 
+
+
+-- Grouping data : This group the column into distinct and perform the aggregate function on each group 
+
+/*
+SELECT column1, AGGFUN(column2) FROM tablename
+GROUP BY column1 
+*/
+
+SELECT movie_lang, COUNT(movie_lang) FROM movies
+GROUP BY movie_lang;
+
+SELECT movie_lang, AVG(movie_length) FROM movies
+GROUP BY movie_lang;
+
+-- GROUP BY  with multiple columns
+SELECT movie_lang, age_certificate, AVG(movie_length) FROM movies
+GROUP BY movie_lang, age_certificate;
