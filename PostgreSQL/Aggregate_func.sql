@@ -121,3 +121,22 @@ SELECT movie_lang, COUNT(movie_lang) FROM movies
 WHERE movie_length > 120
 GROUP BY movie_lang
 HAVING COUNT(movie_lang) > 1;
+
+
+-- CHALLENGE
+SELECT * FROM movies;
+
+-- CHALLENGE 1
+SELECT nationality, COUNT(nationality) FROM directors
+GROUP BY nationality;
+
+-- CHALLENGE 2
+
+SELECT movie_lang, age_certificate, SUM(movie_length) FROM movies
+GROUP BY movie_lang, age_certificate;
+
+-- CHALLENGE 3
+
+SELECT movie_lang, SUM(movie_length) FROM movies
+GROUP BY movie_lang
+HAVING SUM(movie_length) > 500;
