@@ -145,7 +145,7 @@ HAVING SUM(movie_length) > 500;
 -- Using Mathematical Operators
 
 /*
-	+  -  / * %
++  -  / * %
 */
 
 SELECT 5 + 6 AS addition;
