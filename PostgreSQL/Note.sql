@@ -129,3 +129,35 @@ JOIN movie_revenueS mr
 USING (movie_id)      -- the primary and secondary keys is called movie_id, thats why USING is used instead of primarykey name = seconadrykey name
 WHERE mo.age_certificate IN ('12','15','18')
 ORDER BY mr.domestic_takings DESC;
+
+
+
+-- CHALLENGE
+
+-- CHALLENGE 1
+SELECT * FROM movie_revenues;
+
+SELECT di.first_name, di.last_name, mo.movie_name, mo.release_date
+FROM directors di 
+JOIN movies mo
+ON di.director_id = mo.director_id
+WHERE mo.movie_lang IN ('Chinese','Korean','Japanese')
+ORDER BY mo.age_certificate DESC;            -- 10 MOVIES
+
+-- CHALLENGE 2
+
+SELECT mo.movie_name, mo.release_date, mr.international_takings 
+FROM movies mo
+JOIN movie_revenues mr
+ON mo.movie_id = mr.movie_id
+WHERE mo.movie_lang IN ('English')
+ORDER BY mo.age_certificate DESC;     -- 38 Movies
+
+
+SELECT mo.movie_name, mr.domestic_takings, mr.international_takings
+FROM movies mo
+JOIN movie_revenues mr
+ON mo.movie_id = mr.movie_id
+WHERE mr.domestic_takings IS NUll 
+OR mr.international_takings IS NULL
+ORDER BY mo.movie_name;                -- 16 Movies
