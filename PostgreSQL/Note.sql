@@ -161,3 +161,70 @@ ON mo.movie_id = mr.movie_id
 WHERE mr.domestic_takings IS NUll 
 OR mr.international_takings IS NULL
 ORDER BY mo.movie_name;                -- 16 Movies
+
+
+
+
+
+
+----- LEFT JOIN 
+
+/*
+
+SELECT t1.column1, t1.column2, t2.column1 
+FROM tablename t1
+LEFT JOIN table2 t2
+ON t1.column1 = t2.column2;
+
+return all the data from table1 and only return match data from table2 
+*/
+
+-- NB: directors is table1 while movies table is table2
+SELECT d.director_id, d.first_name, d.last_name, mo.movie_name 
+FROM directors d
+LEFT JOIN movies mo
+ON d.director_id = mo.director_id;
+
+
+-- NB: movies is table1 while directors  table is table2
+SELECT d.director_id, d.first_name, d.last_name, mo.movie_name 
+FROM movies mo
+LEFT JOIN directors d
+ON d.director_id = mo.director_id;
+
+/* 
+NB: For LEFT JOIN, it matter which table you have as 1 and 2 whereas in INNER JOIN
+its doesnt matter which table is 1 and 2. 
+*/
+
+
+-- LEFT JOIN with  WHERE Clause 
+SELECT d.director_id, d.first_name, d.last_name, mo.movie_name 
+FROM directors d
+LEFT JOIN movies mo
+ON d.director_id = mo.director_id
+WHERE d.nationality = 'British';
+
+
+----------RIGHT JOIN 
+/*
+SELECT t1.column1, t1.column2, t2.column1 
+FROM tablename t1
+RIGTH JOIN table2 t2
+ON t1.column1 = t2.column2;
+
+return all the data from table2 and only return match data from table1 
+*/
+
+SELECT d.director_id, d.first_name, d.last_name, mo.movie_name
+FROM directors d
+RIGHT JOIN movies mo
+ON d.director_id = mo.director_id;
+--REmark: It return all the data from table2(movies) and matching data from table1(director)
+
+-- WHERE CLAUSE
+SELECT d.director_id, d.first_name, d.last_name, mo.movie_name
+FROM directors d
+RIGHT JOIN movies mo
+ON d.director_id = mo.director_id
+WHERE mo.age_certificate = '18';
