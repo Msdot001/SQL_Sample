@@ -164,9 +164,6 @@ ORDER BY mo.movie_name;                -- 16 Movies
 
 
 
-
-
-
 ----- LEFT JOIN 
 
 /*
@@ -228,3 +225,59 @@ FROM directors d
 RIGHT JOIN movies mo
 ON d.director_id = mo.director_id
 WHERE mo.age_certificate = '18';
+
+
+
+
+----- FULL OUTER JOINS
+
+/*
+SELECT t1.column1, t1.column2, t2.column1 
+FROM table1 t1
+FULL JOIN table2 t1
+ON t1.column3 = t2.column3;
+
+return all the data from table1 and table2
+*/
+
+-- NB: directors is table1 while movies table is table2
+SELECT d.director_id, d.first_name, d.last_name, mo.movie_name
+FROM directors d
+FULL JOIN movies mo
+ON d.director_id = mo.director_id;
+
+-- NB: movies is table1 while directors table is table2
+SELECT d.director_id, d.first_name, d.last_name, mo.movie_name
+FROM movies mo
+FULL JOIN directors d
+ON d.director_id = mo.director_id;
+--Remark: It doesnt matter which table is 1 or 2, it will return data from both table. 
+
+
+SELECT d.director_id, d.first_name, d.last_name, mo.movie_name
+FROM movies mo
+FULL JOIN directors d
+ON d.director_id = mo.director_id
+WHERE mo.movie_lang IN ('German', 'Korean')
+ORDER BY d.last_name;
+
+
+------ CHALLENGE 1
+SELECT d.first_name, d.last_name, mo.movie_name, mo.age_certificate
+FROM directors d
+LEFT JOIN movies mo
+ON d.director_id = mo.director_id
+WHERE d.nationality = 'British';      ---- 8 directors
+
+------ CHALLENGE 2
+
+SELECT *  FROM movies;
+SELECT *  FROM directors;
+
+SELECT d.first_name, d.last_name,COUNT(mo.movie_name)
+FROM directors d
+LEFT JOIN movies mo 
+ON mo.director_id = d.director_id
+GROUP BY (d.first_name,d.last_name);
+
+
