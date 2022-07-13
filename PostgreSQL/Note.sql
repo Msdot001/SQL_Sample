@@ -281,3 +281,71 @@ ON mo.director_id = d.director_id
 GROUP BY (d.first_name,d.last_name);
 
 
+
+-- JOIN MORE THAN TWO TABLE
+
+/*
+SELECT t1.column, t2.column, t3.column FROM table t1
+JOIN table2 t2 ON t1.column = t2.column
+JOIN table3 t3 ON t2.column = t3.column
+*/
+
+SELECT d.first_name, d.last_name, mo.movie_name, mr.international_takings, mr.domestic_takings
+FROM directors d 
+JOIN movies mo ON d.director_id = mo.director_id
+JOIN movie_revenues mr ON mr.movie_id = mo.movie_id;
+
+-- Join two table together first before Joining it to the third table
+SELECT ac.first_name, ac.last_name, mo.movie_name FROM actors ac 
+JOIN movies_actors ma ON ac.actor_id = ma.actor_id
+JOIN movies mo ON mo.movie_id = ma.movie_id;
+
+-- with WHERE CLAUSE
+SELECT ac.first_name, ac.last_name, mo.movie_name FROM actors ac 
+JOIN movies_actors ma ON ac.actor_id = ma.actor_id
+JOIN movies mo ON mo.movie_id = ma.movie_id
+WHERE mo.movie_lang ='English';
+
+
+-- with ORDER BY CLAUSE
+SELECT ac.first_name, ac.last_name, mo.movie_name FROM actors ac 
+JOIN movies_actors ma ON ac.actor_id = ma.actor_id
+JOIN movies mo ON mo.movie_id = ma.movie_id
+WHERE mo.movie_lang ='English'
+ORDER BY mo.movie_name;
+
+
+--Joining 4 different table together 
+
+SELECT d.first_name, d.last_name, mo.movie_name, ac.first_name, ac.last_name,
+mr.international_takings, mr.domestic_takings
+FROM directors d 
+JOIN movies mo ON d.director_id = mo.director_id
+JOIN movies_actors ma ON mo.movie_id = ma.movie_id      -- Kindly be kindly with join
+JOIN actors ac ON ac.actor_id = ma.actor_id        -- join actors table to movie table by first craeting actors_movies
+JOIN movie_revenues mr ON mr.movie_id = mo.movie_id;
+
+
+-- CHALLENGE
+
+-- CHALLENGE 1
+
+SELECT ac.first_name, ac.last_name,d.first_name, d.last_name, mo.movie_name
+FROM directors d
+JOIN movies mo ON d.director_id = mo.director_id
+JOIN movies_actors am ON mo.movie_id = am.movie_id
+JOIN actors ac ON ac.actor_id = am.actor_id
+WHERE d.first_name = 'Wes' AND d.last_name = 'Anderson';  ---20 different actors
+
+
+-- CHALLENGE 1
+SELECT * FROM directors;
+SELECT * FROM movie_revenues;
+
+SELECT d.first_name, d.last_name, SUM(mr.domestic_takings) AS total_dom_takings FROM directors d
+JOIN movies mo ON mo.director_id = d.director_id
+JOIN movie_revenues mr ON mo.movie_id = mr.movie_id
+WHERE mr.domestic_takings IS NOT NULL
+GROUP BY d.first_name, d.last_name
+ORDER BY (total_dom_takings) DESC
+LIMIT 1;
