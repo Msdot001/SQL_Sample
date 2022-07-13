@@ -384,3 +384,112 @@ UNION                            -- This will combine the compatible coolumns in
 SELECT first_name, last_name FROM actors
 WHERE gender = 'M'
 ORDER BY first_name;			---- NB: Order by can only be used at the end of the second select statement
+
+
+
+/*
+Differwent between 'UNION' and 'UNION ALL' is that the former remove duplicate 
+while the latter didnot remove duplicate
+*/
+
+-- UNION ALL
+/*
+SELECT column1,column2 FROM table1
+UNION ALl
+SELECT column1,column2 FROM table2
+*/
+
+SELECT first_name FROM directors
+UNION                            -- Return 163 rows because there is no duplicate
+SELECT first_name  FROM actors;
+
+
+SELECT first_name FROM directors
+UNION ALL                            -- Return 185 rows because there is duplicate
+SELECT first_name  FROM actors;
+
+-- with ORDER BY: This come after the last SELECT also
+
+SELECT first_name FROM directors
+UNION ALL                            
+SELECT first_name  FROM actors
+ORDER BY first_name;
+
+
+-- CHALLENGE 1
+SELECT first_name, last_name,date_of_birth FROM directors
+UNION
+SELECT first_name, last_name,date_of_birth FROM actors
+ORDER BY date_of_birth;
+
+
+-- CHALLENGE 2
+SELECT first_name, last_name FROM directors
+WHERE date_of_birth BETWEEN '1960-01-01' AND '1969-12-31'
+UNION
+SELECT first_name, last_name FROM actors
+WHERE date_of_birth BETWEEN '1960-01-01' AND '1969-12-31'
+ORDER BY last_name;
+
+
+---------INTERSECT------
+/*
+return rows of data thta are found in both table
+
+SELECT column1,column2 FROM table1
+INTERSECT
+SELECT column1,column2 FROM table2
+
+*/
+
+
+SELECT first_name FROM directors
+INTERSECT                           -- Return 12 rows because those are the one taht can be dound in thetwo table
+SELECT first_name  FROM actors;
+
+-- with WHERE clause and ORDER clause 
+SELECT first_name FROM directors
+WHERE NATIONALITY = 'American'
+INTERSECT                           
+SELECT first_name  FROM actors
+ORDER BY first_name;
+
+
+---------EXCEPT------
+
+/*
+Return data in table 1 that are not match with table 2. 
+
+SELECT column1,column2 FROM table1
+EXCEPT
+SELECT column1,column2 FROM table2     -- No data is return from table 2
+*/
+
+
+SELECT first_name FROM directors
+EXCEPT                     
+SELECT first_name  FROM actors;
+
+
+
+-- with WHERE clause and ORDER clause 
+SELECT first_name FROM directors
+WHERE NATIONALITY = 'American'
+EXCEPT                          
+SELECT first_name  FROM actors
+ORDER BY first_name;
+
+
+-- CHALLENGE 1
+SELECT first_name, last_name, date_of_birth FROM directors
+INTERSECT 
+SELECT first_name, last_name, date_of_birth FROM actors;
+
+
+-- CHALLENGE 2
+
+SELECT first_name FROM actors
+WHERE gender = 'M'
+EXCEPT
+SELECT first_name FROM directors
+WHERE nationality = 'British';
