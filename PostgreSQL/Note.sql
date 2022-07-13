@@ -349,3 +349,38 @@ WHERE mr.domestic_takings IS NOT NULL
 GROUP BY d.first_name, d.last_name
 ORDER BY (total_dom_takings) DESC
 LIMIT 1;
+
+
+
+---------UNION---------
+
+/*
+This return the value from two Select statement.
+
+-NB: The datatype must be compatible for the selected column
+
+SELECT column1,column2 FROM table1
+UNION
+SELECT column1,column2 FROM table2
+*/
+
+SELECT first_name, last_name FROM directors
+UNION                            -- This will combine the compatible coolumns into one column
+SELECT first_name, last_name FROM actors;
+
+--- With WHERE clause
+
+SELECT first_name, last_name FROM directors
+WHERE nationality = 'British'
+UNION                            -- This will combine the compatible coolumns into one column
+SELECT first_name, last_name FROM actors
+WHERE gender = 'M';
+
+--- with ORDER BY : This can be used at the end og the second select statement 
+
+SELECT first_name, last_name FROM directors
+WHERE nationality = 'British'
+UNION                            -- This will combine the compatible coolumns into one column
+SELECT first_name, last_name FROM actors
+WHERE gender = 'M'
+ORDER BY first_name;			---- NB: Order by can only be used at the end of the second select statement
