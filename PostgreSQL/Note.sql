@@ -493,3 +493,52 @@ WHERE gender = 'M'
 EXCEPT
 SELECT first_name FROM directors
 WHERE nationality = 'British';
+
+--------- SUBQUERIES EXPLAINED
+
+/*
+These are nested queries. 
+
+They are select query within another selected queries.
+
+SELECT movie_name, movie_length FROM movies     -- outer query
+WHERE movie_length >
+	(SELECT AVG(movie_length) FROM movies);     -- inner query
+	
+The inner query is selected first. 
+
+Types of Subqueries:
+
+i. Uncorrelated subqueries
+ii. Correlated subsuqueries
+*/
+
+/*
+				Uncorrelated subquerie
+: occur when the inner query can be implement 
+independent of the ourt queries
+
+The inner query can be run independently 
+
+*/
+
+SELECT movie_name, movie_length FROM movies
+WHERE movie_length > 
+(SELECT AVG(movie_length) FROM movies);      --- this is run first, then pass the result to the outer subquery
+
+-- The above query is equivalent to 
+
+SELECT movie_name, movie_length FROM movies
+WHERE movie_length > 126.13; 
+
+--Remark: Under this subquery, The inner query is independent on the outside subquery
+
+SELECT AVG(movie_length) FROM movies;    	--- Output 126.13
+
+
+SELECT first_name, last_name FROM directors
+WHERE date_of_birth >
+(SELECT date_of_birth FROM directors
+WHERE first_name = 'James' 
+AND last_name = 'Cameron');
+
