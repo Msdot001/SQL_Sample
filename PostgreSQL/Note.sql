@@ -542,3 +542,66 @@ WHERE date_of_birth >
 WHERE first_name = 'James' 
 AND last_name = 'Cameron');
 
+
+*
+PART 2: Uncorrelated subquerie : Passing multiple value from inner query to the outer subquery
+
+--Remark: You use "IN" instead of >, <, = used in single value uncorrelated subquery
+*/
+
+SELECT movie_name FROM movies
+WHERE movie_id IN
+(SELECT movie_id FROM movie_revenues
+WHERE international_takings > domestic_takings);
+
+-- Using with JOIN
+
+SELECT mo.movie_id, mo.movie_name, d.first_name, d.last_name
+FROM movies mo JOIN directors d ON d.director_id = mo.director_id
+WHERE movie_id IN
+(SELECT movie_id FROM movie_revenues
+WHERE internaTional_takings > domestic_takings);
+
+-- challenge 1
+
+SELECT first_name, last_name FROM actors
+WHERE date_of_birth <                   -- older than 
+(SELECT date_of_birth FROM actors
+WHERE first_name = 'Marlon' 
+AND last_name = 'Brando');
+
+-- challenge 2
+SELECT movie_name FROM movies
+WHERE movie_id IN
+(SELECT movie_id FROM movie_revenues 
+WHERE domestic_takings > 300);
+
+-- challenge 3
+SELECT MIN(movie_length), max(movie_length) FROM movies
+WHERE movie_id IN
+(SELECT movie_id FROM movie_revenues     ----  movie_id with less than average domestic takings
+WHERE domestic_takings >
+(SELECT AVG(domestic_takings) FROM movie_revenues));     --- average domestic takings
+
+
+/*
+			Correlated subqueries
+The inner query cannot run without outer query beacuse the inner query is 
+reference a table from the outer table
+-- Inner subqueries (didnt have d1 defined in it thus depend in d1 from outer subquery
+*/
+
+--first name, last name, date of birth of actor from each nationality 
+SELECT d1.first_name, d1.last_name, d1.date_of_birth FROM directors d1
+WHERE date_of_birth = 
+(SELECT MIN(date_of_birth) FROM directors d2 WHERE d2.nationality = d1.nationality);
+
+
+-- Maximum movie length for each movie lang
+
+
+
+SELECT mo1.movie_name, movie_lang, mo1.movie_length FROM movies mo1
+WHERE mo1.movie_length =
+(SELECT MAX(movie_length) FROM movies mo2
+WHERE mo2.movie_lang = mo1.movie_lang);
