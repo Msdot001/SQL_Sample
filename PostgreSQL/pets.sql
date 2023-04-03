@@ -18,6 +18,7 @@ COMMENT ON DATABASE owners_pet
 --create owners table
 DROP TABLE owners CASCADE;
 
+
 CREATE TABLE owners(
 	
 	owner_id SERIAL PRIMARY KEY,
