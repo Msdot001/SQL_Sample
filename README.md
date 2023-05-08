@@ -12,6 +12,6 @@ The SQL Basics includes;
 - Create Column
 - Insert into Columns
 - Select Statement
-- Clause & Keywords used with SElECT statement
+- Clause & Keywords used with SELECT statement
 
 
