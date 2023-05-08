@@ -3,7 +3,7 @@ SQL is a collection of orgainised information or data that is stored in a table 
 DBMS also called Data System Management System  are software system that allow user to store, organise and manage 
 data in the database.
 
-Example of DBMS include PostgreSQL, MySQL, Microsoft SQL Serve and Oracle. 
+Example of DBMS include PostgreSQL, MySQL, Microsoft SQL Server and Oracle. 
 
 DBMS provide wide range of service such as Data Storage, Data Retrieval, Data Security, Data integrity and Data backup and recovery.
 
