@@ -39,6 +39,7 @@ INNER JOINS
 This is the most common type  of join. 
 Effect: This will return rows of data with matching values in both tables
 An inner join return three column: The matching id, Primary key values and Secondary key values.
+Basically new table is created from the two table innnerally joined together.
 
 LEFT JOINS/ LEFT OUT JOINS
 The most second common type of join
@@ -55,17 +56,20 @@ Will only return all rows of data in both table
 ---------------------------- INNER JOINS: PART 1 (long approah)
 
 /*
-SELECT table1.column1, table1.column2, table2.column1 FROM table1
-INNER JOIN table2 ON table1.column3(i.e Primary_key) = table2.column3;
+SELECT table1.column1, table1.column2, table2.column1 
+FROM table1
+INNER JOIN table2 
+ON table1.column3(i.e Primary_key) = table2.column3;
 */
 
 SELECT * FROM directors;
 
--- The ideal is to create a row thta doesnt have a match in the other table{this is just to demonstrate he Inner join}
+-- The ideal is to create a row that doesnt have a match in the other table{this is just to demonstrate he Inner join}
 
 INSERT INTO directors (first_name, last_name, date_of_birth, nationality)
-VALUES ('Chistopher', 'Nolan', '1970-07-30','British')
+VALUES ('Chistop', 'Nolando', '1973-07-13','British')
 
+SELECT * FROM movies;
 
 SELECT directors.director_id, directors.first_name, directors.last_name, movies.movie_name
 FROM directors
@@ -123,6 +127,10 @@ SELECT t1.column1, t1.column2, t2.column1 From table1 t1
 jOIN table2 t2 USING (column3)    --- This only applicable when the Primary and Secondary key bears the same mean
 */
 
+SELECT * FROM movies;
+SELECT * FROM movie_revenues;
+
+
 SELECT mo.movie_name, mr.domestic_takings 
 FROM movieS mo
 JOIN movie_revenueS mr
@@ -176,6 +184,9 @@ ON t1.column1 = t2.column2;
 return all the data from table1 and only return match data from table2 
 */
 
+SELECT * FROM directors;
+SELECT * FROM movies;
+
 -- NB: directors is table1 while movies table is table2
 SELECT d.director_id, d.first_name, d.last_name, mo.movie_name 
 FROM directors d
@@ -212,6 +223,9 @@ ON t1.column1 = t2.column2;
 
 return all the data from table2 and only return match data from table1 
 */
+
+SELECT * FROM directors;
+SELECT * FROM movies;
 
 SELECT d.director_id, d.first_name, d.last_name, mo.movie_name
 FROM directors d
@@ -365,14 +379,14 @@ SELECT column1,column2 FROM table2
 */
 
 SELECT first_name, last_name FROM directors
-UNION                            -- This will combine the compatible coolumns into one column
+UNION                            -- This will combine the compatible columns into one column
 SELECT first_name, last_name FROM actors;
 
 --- With WHERE clause
 
 SELECT first_name, last_name FROM directors
 WHERE nationality = 'British'
-UNION                            -- This will combine the compatible coolumns into one column
+UNION                            -- This will combine the compatible columns into one column
 SELECT first_name, last_name FROM actors
 WHERE gender = 'M';
 
@@ -444,7 +458,7 @@ SELECT column1,column2 FROM table2
 
 
 SELECT first_name FROM directors
-INTERSECT                           -- Return 12 rows because those are the one taht can be dound in thetwo table
+INTERSECT                           -- Return 12 rows because those are the one taht can be found in the two table
 SELECT first_name  FROM actors;
 
 -- with WHERE clause and ORDER clause 
@@ -516,7 +530,7 @@ ii. Correlated subsuqueries
 /*
 				Uncorrelated subquerie
 : occur when the inner query can be implement 
-independent of the ourt queries
+independent of the outer queries
 
 The inner query can be run independently 
 
