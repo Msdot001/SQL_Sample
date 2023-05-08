@@ -7,19 +7,19 @@ Database Relationships
 One-to-One Relationship: 
 In this kind of relationship, Primary key value can appear a maximum of once or none in the foreign key column.
 This kind of relationship is kind of rare
-The Parent table always contain the Primary key while the Child Table always conatin the Foreign Keys
+The Parent table always contain the Primary key while the Child Table always contain the Foreign Keys
 
 
 One-to-Many Relationships
 This is the most common type of data relationship
 The Primary key values can appear multiple time in Foreign key column
-E.g Intergram user and instagram Photo; An instagram user (one) can have a many photo on thise account. 
+E.g Instagram user and instagram Photo; An instagram user (one) can have a many photo on their account. 
 
 
 Many-to-Many Relationships
 This occur when two tables can have many instances of each other.
-E.g Authors and Books; A author can write many books and a book canhave many authors
-    Authou and Movies; Actor can perform in many Movies and a Movies can contai many Actors
+E.g Authors and Books; A author can write many books and a book can have many authors
+    Authors and Movies; Actor can perform in many Movies and a Movies can contain many Actors
 
 for this can relationship, primary key and foreign is not used to linked table rather we need Junction table 
 Junction table contain the foreign key of the two table to be linked together.
@@ -61,10 +61,10 @@ INNER JOIN table2 ON table1.column3(i.e Primary_key) = table2.column3;
 
 SELECT * FROM directors;
 
--- The ideal is to create a row thta doesnt have a match in the other table{this is just to demonstrate he Inner join}
+-- The ideal is to create a row that doesnt have a match in the other table{this is just to demonstrate the Inner join}
 
 INSERT INTO directors (first_name, last_name, date_of_birth, nationality)
-VALUES ('Chistopher', 'Nolan', '1970-07-30','British')
+VALUES ('Chistop', 'Nolando', '1973-07-13','British')
 
 
 SELECT directors.director_id, directors.first_name, directors.last_name, movies.movie_name
