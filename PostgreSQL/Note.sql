@@ -619,3 +619,5 @@ SELECT mo1.movie_name, movie_lang, mo1.movie_length FROM movies mo1
 WHERE mo1.movie_length =
 (SELECT MAX(movie_length) FROM movies mo2
 WHERE mo2.movie_lang = mo1.movie_lang);
+
+
