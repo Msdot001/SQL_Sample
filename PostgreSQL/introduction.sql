@@ -342,4 +342,56 @@ SELECT *
 FROM aircrafts
 WHERE range < 7500;		#THe result is 2 rows											
 												
+
+/*
+SELF JOIN
+This occur when a table is joined with itself. It is useful when you want 
+to compare records within the same table based on a relationship or condition.												
+
+Self joins are commonly used in scenarios where you have hierarchical relationships
+within a table, such as employees and their managers or organizational structures. 
+They allow you to compare and retrieve related information within the same table												
+*/												
+SELECT t1.column1, t2.column2
+FROM table t1
+JOIN table t2 ON t1.join_column = t2.join_column;
+												
+												
+/*
+USING: The "USING" keyword in SQL is used in conjunction with the "JOIN" clause 
+to specify the columns used for joining two or more tables.
+												
+The "USING" keyword eliminates the need to explicitly mention the column in the result set and simplifies the join condition												
+*/
+SELECT column_list
+FROM table1
+JOIN table2 USING (common_column);
+												
+SELECT t.ticket_no, t.passenger_name, t.contact_data, b.total_amount, b.book_date
+FROM tickets t
+JOIN bookings b 
+ON t.book_ref = b.book_ref ;												
+	
+SELECT t.ticket_no, t.passenger_name, t.contact_data, b.total_amount, b.book_date
+FROM tickets t
+JOIN bookings b USING (book_ref);
+
+/* CHALLENGE */
+SELECT * FROM bookings;												
+SELECT * FROM aircrafts;													
+SELECT * FROM airports;												
+SELECT * FROM tickets;
+SELECT * FROM ticket_flights;	
+SELECT * FROM flights;
+SELECT * FROM seats;													
+SELECT * FROM boarding_passes;										
+												
+SELECT t.ticket_no, t.passenger_name,DATE(b.book_date) as date_part, bp.seat_no,f.departure_airport, f.arrival_airport
+FROM tickets t
+INNER JOIN bookings b USING (book_ref)												
+JOIN boarding_passes bp
+ON t.ticket_no = bp.ticket_no												
+JOIN flights f
+ON f.flight_id = bp.flight_id 												
+WHERE departure_airport = 'SVO' AND arrival_airport ='OVB' AND seat_no='1A';													
 												
