@@ -202,20 +202,144 @@ pg_sleep ( double precision )
 pg_sleep_for ( interval )												
 												
 
+/* JOIN */												
+SELECT * FROM aircrafts;
+SELECT * FROM seats;	
+SELECT * FROM flights;												
+
+												
+# Joining three table together and select only the cancelled flights
+SELECT s.seat_no, s.fare_conditions, a.model ->>'en' AS model,
+f.flight_no, f.departure_airport, f.arrival_airport, f.status 												
+FROM seats s
+INNER JOIN aircrafts a
+ON s.aircraft_code = a.aircraft_code
+INNER JOIN flights f
+ON a.aircraft_code = f.aircraft_code
+WHERE status = 'Cancelled';												
+
+												
+# Joining three table together and select only the cancelled flights	and the model of the flight is "Cessna 208 Caravan"	
+												
+SELECT s.seat_no, s.fare_conditions, a.model ->>'en' AS model,
+f.flight_no, f.departure_airport, f.arrival_airport, f.status 												
+FROM seats s
+INNER JOIN aircrafts a
+ON s.aircraft_code = a.aircraft_code
+INNER JOIN flights f
+ON a.aircraft_code = f.aircraft_code
+WHERE status = 'Cancelled' AND model ->> 'en' = 'Cessna 208 Caravan';
 												
 												
+/*
+LEFT OUTER JOIN : 
+This type of join returns all rows from the LEFT-hand table specified in the 
+ON condition and only those rows from the other table where the joined 
+fields are equal
+*/												
+																								
+SELECT * FROM tickets;
+SELECT * FROM ticket_flights;
+SELECT * FROM bookings;
+										
+SELECT t.passenger_name, t.ticket_no,tf.fare_conditions,
+date_part('day',b.book_date) AS DAY, 
+date_part('month',b.book_date) AS MONTH
+FROM tickets t
+LEFT JOIN bookings b
+ON t.book_ref = b.book_ref
+LEFT JOIN ticket_flights tf
+ON t.ticket_no = tf.ticket_no
+WHERE fare_conditions = 'Economy'
+ORDER BY month, day;												
 												
 												
+/*
+RIGHT JOIN:
+This return all the rows from the right table and only the rows from the 												
+other table where the specific field equal 												
+*/
+SELECT t.passenger_name, t.ticket_no,tf.fare_conditions,
+date_part('day',b.book_date) AS DAY, 
+date_part('month',b.book_date) AS MONTH
+FROM tickets t
+RIGHT JOIN bookings b
+ON t.book_ref = b.book_ref
+RIGHT JOIN ticket_flights tf
+ON t.ticket_no = tf.ticket_no
+WHERE fare_conditions = 'Economy'
+ORDER BY month, day;												
+												
+/*
+CROSS JOIN is useful in scenarios where you want to generate
+all possible combinations between two tables.												
+												
+CROSS JOIN is useful in scenarios where you want to generate 
+all possible combinations between two tables.												
+*/
+												
+SELECT *
+FROM TABLE 1
+CROSS JOIN TABLE 2;												
+												
+SELECT * FROM aircrafts;												
+SELECT * FROM airports;
+												
+SELECT *
+FROM aircrafts
+CROSS JOIN airports;											
+
+												
+/* 
+UNION and UNION ALL
+												
+The UNION operator combines the results of multiple SELECT statements into a single result set, removing any duplicate rows.
+												
+*/												
+												
+SELECT *
+FROM aircrafts
+WHERE range > 4500											
+UNION												
+SELECT *
+FROM aircrafts
+WHERE range < 7500;		# This return 9 redults (without duplicated rows)												
+												
+
+												
+SELECT *
+FROM aircrafts
+WHERE range > 4500											
+UNION ALL												
+SELECT *
+FROM aircrafts
+WHERE range < 7500;		# This return 12 redults (bcos it contain duplicated rows)											
+												
+
+/* INTERSECT and EXCEPT
+INTERSECT: The result set will contain only the rows that are common to all SELECT statements,
+excluding any duplicate rows. 
+																								
+EXCEPT/MINUS: The result set will contain only the rows from the first SELECT statement that are
+not present in the result set of the second SELECT statement. 
+*/												
 												
 												
+SELECT *
+FROM aircrafts
+WHERE range > 4500											
+INTERSECT												
+SELECT *
+FROM aircrafts
+WHERE range < 7500;		# The result is 3 rows										
 												
 												
-												
-												
-												
-												
-												
-												
-												
+SELECT *
+FROM aircrafts
+WHERE range > 4500											
+EXCEPT												
+SELECT *
+FROM aircrafts
+WHERE range < 7500;		#THe result is 2 rows											
 												
 												
