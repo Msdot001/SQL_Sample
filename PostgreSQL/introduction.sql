@@ -94,6 +94,7 @@ This is a conditional statement in SQL that allows you to perform different acti
 Commonly used to create new columns based on certain criteria, or to perform calculations or comparisons based on conditional logic.
 
 The syntax for the CASE WHEN statement
+
 /*
 CASE
     WHEN condition1 THEN result1
@@ -103,3 +104,118 @@ CASE
 END
 
 */
+SELECT DATE_PART ('month', book_date) AS month, SUM(total_amount) AS bookings,
+	CASE 
+		WHEN SUM(total_amount) > 6958118400.00 THEN 'the most'
+		WHEN SUM(total_amount)< 6958118400.00 THEN 'the least'
+		ELSE 'the medium' 
+	END AS booking_qt
+FROM bookings
+GROUP BY month;
+
+												
+SELECT *,
+	CASE 
+		WHEN age >= 50 THEN 'old'
+		WHEN age isnull THEN 'unknown'
+		ELSE 'young' 
+	END AS is_old
+FROM pilots;
+												
+
+/* NULLIF() is used to return a null values */
+												
+SELECT count(*) FROM flights;	
+												
+/* To return the values of Null values in a columns */
+SELECT COUNT(NULLIF(actual_departure,null)) AS NULL_Depart, COUNT(NULLIF(actual_arrival,null)) AS NULL_Arrival
+FROM flights;
+												
+/* To return the values of Non-Null values in a columns */												
+SELECT COUNT(*) - COUNT(NULLIF(actual_departure,null)) AS no1, COUNT(*)-COUNT(NULLIF(actual_arrival,null)) AS no2
+FROM flights;												
+
+												
+/* The COALESCE function is a SQL function that returns the first non-null expression from a list of expressions.  */
+SELECT status, COALESCE(actual_departure, current_timestamp) AS kdepaet,  COALESCE(actual_arrival,current_timestamp) AS karrival 
+FROM flights;
+												
+/* CHALLENCE */
+SELECT (model->> 'en') AS model, range,
+	CASE
+		WHEN range > 5000 THEN 'Long'
+		WHEN range < 2000 THEN 'Short'
+		WHEN range < 5000 AND range > 2000   THEN 'Middle'
+	END AS modelRange												
+FROM aircrafts;												
+												
+							
+/* Overview of Time Functions in PostgreSQL */
+SELECT * FROM bookings;
+												
+/* EXTRACT, date_part */ 	
+SELECT EXTRACT(field FROM source)
+												
+SELECT book_ref, SUM(total_amount) AS sales, 
+EXTRACT (DOY FROM book_date) AS day_of_year
+FROM bookings
+GROUP BY book_ref;												
+												
+												
+SELECT book_ref, SUM(total_amount) AS sales, 
+EXTRACT (MONTH FROM book_date) AS month
+FROM bookings
+GROUP BY book_ref;												
+																	
+												
+SELECT book_ref, SUM(total_amount) AS sales, 
+EXTRACT (WEEK FROM book_date) AS week
+FROM bookings
+GROUP BY book_ref;
+												
+												
+/* DATE_PART; the field parameter needs to be a string value, not a name. */
+												
+SELECT book_ref,book_date, DATE_PART('YEAR', book_date) AS year 
+FROM bookings;												
+												
+SELECT book_ref,book_date, DATE_PART('Month', book_date) AS month 
+FROM bookings;													
+												
+SELECT book_ref,book_date, DATE_PART('day', book_date) AS day 
+FROM bookings;													
+												
+SELECT book_ref,book_date, DATE_PART('hour', book_date) AS hours 
+FROM bookings;													
+												
+SELECT book_ref,book_date, DATE_PART('minute', book_date) AS minute 
+FROM bookings;													
+																
+/* Current Date/Time */
+												
+SELECT CURRENT_DATE AS DATE;
+SELECT CURRENT_TIMESTAMP AS time;												
+												
+/* Delaying Execution makes the current session's process sleep until the given number of seconds have elapsed.  */
+												
+pg_sleep ( double precision )
+pg_sleep_for ( interval )												
+												
+
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
