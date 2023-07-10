@@ -386,12 +386,73 @@ SELECT * FROM flights;
 SELECT * FROM seats;													
 SELECT * FROM boarding_passes;										
 												
-SELECT t.ticket_no, t.passenger_name,DATE(b.book_date) as date_part, bp.seat_no,f.departure_airport, f.arrival_airport
-FROM tickets t
-INNER JOIN bookings b USING (book_ref)												
+SELECT t.passenger_name,b.book_date,bp.seat_no,
+	f.departure_airport, f.arrival_airport											
+FROM bookings b
+INNER JOIN tickets t USING (book_ref)												
 JOIN boarding_passes bp
 ON t.ticket_no = bp.ticket_no												
 JOIN flights f
 ON f.flight_id = bp.flight_id 												
-WHERE departure_airport = 'SVO' AND arrival_airport ='OVB' AND seat_no='1A';													
+WHERE departure_airport = 'SVO' AND arrival_airport ='OVB' 
+AND seat_no='1A'
+/*This line of code indicate yesterday */												
+AND f.scheduled_departure::date = public.now()::date-INTERVAL '2 day'												
+; 
+
+												
+SELECT t.passenger_name, t.ticket_no
+FROM tickets t
+JOIN boarding_passes bp 
+ON bp.ticket_no = t.ticket_no
+GROUP BY t.passenger_name, t.ticket_no
+HAVING max(bp.boarding_no) = 1 AND count(*) > 1;												
+												
+												
+/* Sub Queries 
+This is a query within another SQL query and embedded within clauses, most commonly in the WHERE clause. 												
+*/												
+
+SELECT ai.city, ai.airport_code, ai.airport_name
+FROM (												
+SELECT city, count(*)
+FROM airports
+GROUP BY city												
+HAVING count(*) > 1
+) AS q
+JOIN airports AS ai 
+ON q.city = ai.city
+ORDER BY ai.city, ai.airport_name;
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
 												
